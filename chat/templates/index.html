@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+
+{% block messages %}
+  <div class="messages">
+      <div class="row chat_row">
+      <div class="col s12 l6 right">
+        <div class="card-panel light-blue darken-4">
+          <span class="white-text">Hi @Bot, how are you doing ?
+          </span>
+        </div>
+      </div>
+    </div>
+      <div class="row chat_row">
+      <div class="col s12 l6 left">
+        <div class="card-panel black-text grey lighten-3">
+          <span class="black-text"><b>Bot:</b>  I am doing good. What are you doing?
+          </span>
+        </div>
+      </div>
+    </div>
+      <div class="row chat_row">
+      <div class="col s12 l6 right">
+        <div class="card-panel light-blue darken-4">
+          <span class="white-text">Just chilling out. What about you?
+          </span>
+        </div>
+      </div>
+    </div>
+      <div class="row chat_row">
+      <div class="col s12 l6 left">
+        <div class="card-panel black-text grey lighten-3">
+          <span class="black-text"> <b>Bot:</b>  I never take break. 24*7 working. ;) 
+          </span>
+        </div>
+      </div>
+    </div>
+      <div class="row chat_row">
+      <div class="col s12 l6 right">
+        <div class="card-panel light-blue darken-4">
+          <span class="white-text">Ohh....great man. You are so hard working.
+          </span>
+        </div>
+      </div>
+    </div>
+      <div class="row chat_row">
+      <div class="col s12 l6 right">
+        <div class="card-panel light-blue darken-4">
+          <span class="white-text">By the way, can you answer the questions related to Sequential Visual Question Answering?
+          </span>
+        </div>
+      </div>
+    </div>
+          <div class="row chat_row">
+      <div class="col s12 l6 left">
+        <div class="card-panel black-text grey lighten-3">
+          <span class="black-text"><b>Bot:</b>  Yes I can. Thats the purpose of my life. 
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block message_typing %}
+<nav class="message_typing z-depth-3">
+  <div class="nav-wrapper light-blue darken-4">
+    <form>
+      <div class="input-field">
+        <input id="search" type="search" required>
+        <label for="search"><i class="material-icons right">search</i></label>
+        <i class="material-icons">close</i>
+      </div>
+    </form>
+  </div>
+</nav>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sequential-Visual Question Answering</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,‌​100italic,300,300ita‌​lic,400italic,500,50‌​0italic,700,700itali‌​c,900italic,900' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <meta name="description" content="CloudCV: Large Scale Distributed Computer Vision as a Cloud Service">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<style type="text/css">
+  .side-nav{
+    z-index: -1;
+  }
+  .side-nav li{
+    height: 60px;
+  }
+</style>
+<header>
+{% block header%}
+<div class="navbar-fixed light-blue darken-4">
+  <nav>
+    <div class="nav-wrapper light-blue darken-4">
+        <a href="#" class="brand-logo">Sequential-VQA</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">My Profile</a></li>
+          <li><a href="#">Logout</a></li>
+        </ul>
+    </div>
+  </nav>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+<ul id="chat-list" class="side-nav fixedv z-index-0 hide-on-med-and-down grey lighten-5" style="transform: translateX(0%);">
+  <li class="sidebar_li"><a href="#"><img class="circle responsive-img left"  src="http://materializecss.com/images/yuna.jpg">Deshraj Yadav</a> </li>
+  <li class="sidebar_li"><a href="#"><img class="circle responsive-img left"  src="http://materializecss.com/images/yuna.jpg">Harsh Aggarwal</a> </li>
+  <li class="sidebar_li"><a href="#"><img class="circle responsive-img left"  src="http://materializecss.com/images/yuna.jpg">Abhishek Das</a> </li>
+  <li class="sidebar_li"><a href="#"><img class="circle responsive-img left"  src="http://materializecss.com/images/yuna.jpg">Devi Parikh</a> </li>
+  <li class="sidebar_li"><a href="#"><img class="circle responsive-img left"  src="http://materializecss.com/images/yuna.jpg">Dhruv Batra</a> </li>
+  <li class="sidebar_li"><a href="#"><img class="circle responsive-img left"  src="http://materializecss.com/images/yuna.jpg">Akrit</a> </li>
+  <li class="sidebar_li"><a href="#"><img class="circle responsive-img left"  src="http://materializecss.com/images/yuna.jpg">Deshraj Yadav</a> </li>
+
+</ul>
+{% endblock %}
+</header>
+
+{% block messages %}
+
+{% endblock %}
+
+{% block message_typing %}
+
+{% endblock %}
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+</body>
+</html>
