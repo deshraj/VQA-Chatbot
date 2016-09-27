@@ -43,9 +43,7 @@
     box-shadow: 0 0 0 0 !important;
   }
 </style>
-<body>
-  <div class="mCustomScrollbar scroller" data-mcs-theme="dark">
-    
+<body>    
   <header>
   {% block header%}
   <div class="navbar-fixed">
@@ -78,11 +76,12 @@
 
   {% endblock %}
 
-  </div>
   <script type="text/javascript">
-  $(window).on("load",function(){
-            $(".scroller").mCustomScrollbar();
+  // Initialize materialbox
+  $(document).ready(function(){
+    $('.materialboxed').materialbox();
   });
+
   </script>
 </body>
 </html>

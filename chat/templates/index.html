@@ -6,7 +6,7 @@
 {% block messages %}
   <div class="messages">
 
-      <div class="row chat_row_human">
+    <div class="row chat_row_human">
       <div class="col s9 l7 right">
         <div class="card-panel light-blue darken-4 right">
           <span class="white-text">Hey, how are you doing today ?
@@ -15,7 +15,7 @@
       </div>
     </div>
 
-      <div class="row chat_bot_row">
+    <div class="row chat_bot_row">
       <img src="{% static 'images/bot.jpg'%}" width="40px" height="40px" class="circle" align="left">
       <div class="col s9 l7 left chat_bot">
         <div class="card-panel black-text grey lighten-3">
@@ -23,7 +23,7 @@
           </span>
         </div>
       </div>
-    </div>
+  </div>
 
   </div>
 {% endblock %}
@@ -49,10 +49,11 @@
 </nav>
 
 <script type="text/javascript">
+
   $("#question").keypress(function (e) {
     var key = e.which;
     var question = $("#question").val();
-    if(key == 13 && question!='')  // the enter key code
+    if(key == 13 && question != '')  // the enter key code
     {
       console.log("Question submitted");
       $("#question").val('');
@@ -67,5 +68,35 @@
       $("html, body").animate({ scrollTop: $(document).height()-$(window).height() }, 100);
     }
   });
+
+  // Below function is to show the preview of file being uploaded
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        var userChatDiv = $('<div class="row chat_row_human"></div>');
+        var userColDiv = $('<div class="col s9 l7 right"></div>');
+        var userCardPanelDiv = $('<div class="card-panel light-blue darken-4 right"></div>');
+        var imageElement = $('<img src="" class="materialboxed responsive-img" width="300px">');
+        $(userCardPanelDiv).prepend(imageElement);
+        $(userColDiv).prepend(userCardPanelDiv);
+        $(userChatDiv).prepend(userColDiv);
+        $(".messages").append(userChatDiv);
+
+        reader.onload = function (e) {
+            $(imageElement).attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        $('.materialboxed').materialbox();
+        $("html, body").animate({ scrollTop: $(document).height()-$(window).height() }, 100);
+    }
+}
+
+
+$("input:file").change(function(){
+    readURL(this);
+});
+
+
 </script>
 {% endblock %}
