@@ -1,108 +1,71 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block sidebar %}
 
 {% endblock %}
 {% block messages %}
   <div class="messages">
-      <div class="row chat_row">
-      <div class="col s9 l6 right">
-        <div class="card-panel light-blue darken-4">
-          <span class="white-text">Hi @Bot, how are you doing ?
-          </span>
-        </div>
-      </div>
-    </div>
-      <div class="row chat_row">
-      <div class="col s9 l6 left">
-        <div class="card-panel black-text grey lighten-3">
-          <span class="black-text"><b>Bot:</b>  I am doing good. What are you doing?
-          </span>
-        </div>
-      </div>
-    </div>
-      <div class="row chat_row">
-      <div class="col s9 l6 right">
-        <div class="card-panel light-blue darken-4">
-          <span class="white-text">Just chilling out. What about you?
-          </span>
-        </div>
-      </div>
-    </div>
-      <div class="row chat_row">
-      <div class="col s9 l6 left">
-        <div class="card-panel black-text grey lighten-3">
-          <span class="black-text"> <b>Bot:</b>  I never take break. 24*7 working. ;) 
-          </span>
-        </div>
-      </div>
-    </div>
-      <div class="row chat_row">
-      <div class="col s9 l6 right">
-        <div class="card-panel light-blue darken-4">
-          <span class="white-text">Ohh....great man. You are so hard working.
-          </span>
-        </div>
-      </div>
-    </div>
-      <div class="row chat_row">
-      <div class="col s9 l6 right">
-        <div class="card-panel light-blue darken-4">
-          <span class="white-text">By the way, can you answer the questions related to Sequential Visual Question Answering? By the way, can you answer the questions related to Sequential Visual Question Answering? By the way, can you answer the questions related to Sequential Visual Question Answering?
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="row chat_row">
-      <div class="col s9 l6 left">
-        <div class="card-panel black-text grey lighten-3">
-          <span class="black-text"><b>Bot:</b>  Yes I can. Thats the purpose of my life. 
+
+      <div class="row chat_row_human">
+      <div class="col s9 l7 right">
+        <div class="card-panel light-blue darken-4 right">
+          <span class="white-text">Hey, how are you doing today ?
           </span>
         </div>
       </div>
     </div>
 
-    <div class="row chat_row">
-      <div class="col s9 l6 left">
+      <div class="row chat_bot_row">
+      <img src="{% static 'images/bot.jpg'%}" width="40px" height="40px" class="circle" align="left">
+      <div class="col s9 l7 left chat_bot">
         <div class="card-panel black-text grey lighten-3">
-          <span class="black-text"><b>Bot:</b>  Yes I can. Thats the purpose of my life. 
+          <span class="black-text">Hey, I am doing good.
           </span>
         </div>
       </div>
     </div>
 
-    <div class="row chat_row">
-      <div class="col s9 l6 left">
-        <div class="card-panel black-text grey lighten-3">
-          <span class="black-text"><b>Bot:</b>  Yes I can. Thats the purpose of my life. 
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="row chat_row">
-      <div class="col s9 l6 left">
-        <div class="card-panel black-text grey lighten-3">
-          <span class="black-text"><b>Bot:</b>  Yes I can. Thats the purpose of my life. 
-          </span>
-        </div>
-      </div>
-    </div>
   </div>
 {% endblock %}
 
 
 {% block message_typing %}
 <nav class="message_typing z-depth-3">
-  <div class="nav-wrapper light-blue darken-4">
-    <form>
-      <div class="input-field">
-        <input id="search" type="search" required>
-        <label for="search"><i class="material-icons right">search</i></label>
-        <i class="material-icons">close</i>
+  <div class="nav-wrapper">
+    <!-- <form> -->
+      <div class="row">
+        <div class="col s1 file-field" align="center">
+            <input type="file">
+            <i class="material-icons">add_a_photo</i>
+        </div>
+        <div class="col s11 input-field">
+          <input id="question" type="text" placeholder="Start typing question here ..." autocomplete="off">
+          <!-- <label for="question">Start typing question here ...</label> -->
+          <i class="material-icons">close</i>
+        </div>
       </div>
-    </form>
+    <!-- </form> -->
   </div>
 </nav>
 
+<script type="text/javascript">
+  $("#question").keypress(function (e) {
+    var key = e.which;
+    var question = $("#question").val();
+    if(key == 13 && question!='')  // the enter key code
+    {
+      console.log("Question submitted");
+      $("#question").val('');
+      var userChatDiv = $('<div class="row chat_row_human"></div>');
+      var userColDiv = $('<div class="col s9 l7 right"></div>');
+      var userCardPanelDiv = $('<div class="card-panel light-blue darken-4 right"></div>');
+
+      $(userCardPanelDiv).prepend('<span class="white-text">' + question + '</span>');
+      $(userColDiv).prepend(userCardPanelDiv);
+      $(userChatDiv).prepend(userColDiv);
+      $(".messages").append(userChatDiv);
+      $("html, body").animate({ scrollTop: $(document).height()-$(window).height() }, 100);
+    }
+  });
+</script>
 {% endblock %}

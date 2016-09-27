@@ -19,25 +19,11 @@ body{
 }
 
 @media only screen and (min-width: 993px) {
-	.message_typing{
-		/*left: 300px !important;*/
-	}
-
-	  .brand-logo{
-  		  padding-left: 40px !important;
-  	}
 
   	.messages{
   		/*margin-left: 300px !important;*/
   		margin-bottom: 64px;
   	}
-}
-
-img.responsive-img{
-	height: 80%;
-	vertical-align: middle;
-	padding-right: 10px;
-	/*margin-left: 10%;*/
 }
 
 .sidebar_li{
@@ -48,4 +34,12 @@ img.responsive-img{
 
 #chat-list{
 	margin-top: 60px;
+}
+
+.circle{
+	vertical-align: middle;
+}
+
+.chat_bot_row, .chat_bot{
+	padding: 0 0.5rem; 
 }
