@@ -65,6 +65,5 @@ ENV/
 # Rope project settings
 .ropeproject
 
-models/
-!models/download_models.sh
-
+models/*.prototxt
+models/*.caffemodel
