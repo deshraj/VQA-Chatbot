@@ -1,3 +1,6 @@
+from django.conf import settings
+import os
+
 BOT_INTORDUCTION_MESSAGE = [
 	"Welcome to CloudCV's Sequential Visual Question Answering. Upload an Image and you can ask me any question.",
 ]
@@ -14,9 +17,9 @@ GRAD_CAM_RESPONSE_MESSAGE = [
 	"",
 ]
 
-VQA_GPUID = 0
+SVQA_GPUID = -1
 
-VQA_CONFIG = {
+SVQA_CONFIG = {
     'proto_file': 'models/VGG_ILSVRC_19_layers_deploy.prototxt',
     'model_file': 'models/VGG_ILSVRC_19_layers.caffemodel',
     'input_sz': 224,
@@ -33,7 +36,9 @@ VQA_CONFIG = {
 }
 
 
-if VQA_GPUID == -1:
-    VQA_CONFIG['backend'] = "nn"
+if SVQA_GPUID == -1:
+    SVQA_CONFIG['backend'] = "nn"
 else:
-    VQA_CONFIG['backend'] = "cudnn"
+    SVQA_CONFIG['backend'] = "cudnn"
+
+SVQA_LUA_PATH = "svqa.lua"

@@ -12,7 +12,7 @@ def svqa(input_question, input_answer, image_path, out_dir, socketid):
             host='localhost'))
     channel = connection.channel()
 
-    channel.queue_declare(queue='vqa_task_queue', durable=True)
+    channel.queue_declare(queue='svqa_task_queue', durable=True)
     message = {
         'image_path': image_path,
         'input_question': input_question,
@@ -20,9 +20,10 @@ def svqa(input_question, input_answer, image_path, out_dir, socketid):
         'output_dir': out_dir,
         'socketid': socketid,
     }
-    log_to_terminal(socketid, {"terminal": "Publishing job to VQA Queue"})
+
+    log_to_terminal(socketid, {"terminal": "Publishing job to SVQA Queue"})
     channel.basic_publish(exchange='',
-                      routing_key='vqa_task_queue',
+                      routing_key='svqa_task_queue',
                       body=json.dumps(message),
                       properties=pika.BasicProperties(
                          delivery_mode = 2, # make message persistent
