@@ -13,6 +13,7 @@ import pika
 import time
 import yaml
 import json
+import traceback
 
 # Loading the VQA Model forever
 SVQAModel = PyTorchHelpers.load_lua_class(constants.SVQA_LUA_PATH, 'SVQATorchModel')
@@ -45,7 +46,7 @@ def callback(ch, method, properties, body):
         print(" [x] Received %r" % body)
         body = yaml.safe_load(body) # using yaml instead of json.loads since that unicodes the string in value
 
-        result = VqaTorchModel.predict(body['image_path'], constants.SVQA_CONFIG['input_sz'], constants.SVQA_CONFIG['input_sz'], body['input_question'], body['input_answer'], body['output_dir'])
+        result = SVqaTorchModel.predict(body['image_path'], constants.SVQA_CONFIG['input_sz'], constants.SVQA_CONFIG['input_sz'], body['input_question'], body['input_answer'], body['output_dir'])
         result['input_image'] = str(result['input_image']).replace(settings.BASE_DIR, '')
         result['svqa_gcam'] = str(result['svqa_gcam']).replace(settings.BASE_DIR, '')
         result['svqa_gcam_raw'] = str(result['svqa_gcam_raw']).replace(settings.BASE_DIR, '')

@@ -3,6 +3,7 @@ import os
 
 BOT_INTORDUCTION_MESSAGE = [
 	"Welcome to CloudCV's Sequential Visual Question Answering. Upload an Image and you can ask me any question.",
+	"Hi, My name is Perceptron. Upload an image and you can ask me any number of questions regarding that.",
 ]
 
 NO_IMAGE_UPLOADED_MESSAGE = [
@@ -17,7 +18,7 @@ GRAD_CAM_RESPONSE_MESSAGE = [
 	"",
 ]
 
-SVQA_GPUID = -1
+SVQA_GPUID = 0
 
 SVQA_CONFIG = {
     'proto_file': 'models/VGG_ILSVRC_19_layers_deploy.prototxt',

@@ -43,3 +43,12 @@ body{
 .chat_bot_row, .chat_bot{
 	padding: 0 0.5rem; 
 }
+
+
+@media only screen and (max-width: 993px) {
+
+  	.gcam_image{
+  		/*margin-left: 300px !important;*/
+  		margin-bottom: 64px;
+  	}
+}
