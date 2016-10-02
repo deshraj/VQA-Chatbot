@@ -2,8 +2,7 @@ from django.conf import settings
 import os
 
 BOT_INTORDUCTION_MESSAGE = [
-	"Welcome to CloudCV's Sequential Visual Question Answering. Upload an Image and you can ask me any question.",
-	"Hi, My name is Perceptron. Upload an image and you can ask me any number of questions regarding that.",
+	"Hi, My name is Vicki. Upload an image and you can ask me any number of questions related to that image.",
 ]
 
 NO_IMAGE_UPLOADED_MESSAGE = [

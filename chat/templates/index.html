@@ -36,7 +36,7 @@
     <!-- <form> -->
       <div class="row">
         <div class="col s1 file-field">
-            <input type="file">
+            <input type="file" accept="image/*">
             <i class="material-icons">add_a_photo</i>
         </div>
         <div class="col s11 input-field">
@@ -68,7 +68,7 @@
       $(userChatDiv).prepend(userColDiv);
       $(".messages").append(userChatDiv);
       $("html, body").animate({ scrollTop: $(document).height()-$(window).height() }, 100);
-
+      console.log("######### Uploaded image path is " + image);
       if (image == ""){ // Handles the condition when no image is uploaded yet 
         var botChatDiv = $('<div class="row chat_bot_row"></div>');
         var botImage = $('<img src="{% static 'images/bot.jpg'%}" width="40px" height="40px" class="circle" align="left">');
