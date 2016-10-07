@@ -11,6 +11,7 @@ import redis
 import datetime
 import os
 import shutil
+import pdb
 
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
@@ -21,13 +22,13 @@ def ws_connect(message):
 
 def ws_message(message):
     body = json.loads(message.content['text'])
-    user = UserDetail.objects.get(uuid = body["socketid"])
-
+    print "INCOMING REQUEST"
     if body["event"] == "ConnectionEstablished":
         Group(body["socketid"]).add(message.reply_channel)
         log_to_terminal(body["socketid"], {"info": "User added to the Channel Group"})
 
     elif body["event"] == "start":
+        user = UserDetail.objects.get(uuid = body["socketid"])
         current_datetime = timezone.now()
         user.start_time = current_datetime
         user.name = body["username"]
@@ -35,6 +36,7 @@ def ws_message(message):
         r.set("start_time_{}".format(body["socketid"]), current_datetime.strftime("%I:%M%p on %B %d, %Y"))
 
     elif body["event"] == "questionSubmitted":
+        user = UserDetail.objects.get(uuid = body["socketid"])
         print "recieved question at the backend"
         QuestionAnswer.objects.create(user = user, question = body["question"])
         target_image = r.get("target_{}".format(body["socketid"]))
@@ -46,9 +48,10 @@ def ws_message(message):
             os.makedirs(output_dir)
             shutil.copy(target_image_abs_path, output_dir)
 
-        vqa_sender(body['question'], "", target_image_abs_path, output_dir, socketid)
+        vqa_sender(body['question'], "", target_image_abs_path, output_dir, body["socketid"])
 
     elif body["event"] == "end":
+        user = UserDetail.objects.get(uuid = body["socketid"])
         current_datetime = timezone.now()
         target_image = r.get("target_{}".format(body["socketid"]))
         predicted_image = body["predicted_image"]

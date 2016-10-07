@@ -14,9 +14,8 @@ def get_random_images(images_path):
     try:
         print images_path
         images_list = os.listdir(images_path)
-        print images_list
         demo_images = [random.choice(images_list) for i in range(24)]
-        demo_images = [os.path.join(settings.MEDIA_URL, 'vicki', 'coco', x) for x in demo_images]
+        demo_images = [os.path.join(settings.MEDIA_URL, 'vicki', 'coco', 'val2014', x) for x in demo_images]
         return demo_images
     except Exception:
         print traceback.format_exc()

@@ -151,39 +151,6 @@ img {
 {% endblock %}
 
 {% block message_typing %}
-<script type="text/javascript">
-
-  $("#question").keypress(function (e) {
-    var key = e.which;
-    var question = $("#question").val();
-    if(key == 13 && question != '')  // the enter key code
-    {
-      $("#question").val('');
-      // Create div of the user's message
-      var userChatDiv = $('<div class="row chat_row_human"></div>');
-      var userColDiv = $('<div class="col s9 l7 right"></div>');
-      var userCardPanelDiv = $('<div class="card-panel light-blue darken-4 right"></div>');
-
-      $(userCardPanelDiv).prepend('<span class="white-text">' + question + '</span>');
-      $(userColDiv).prepend(userCardPanelDiv);
-      $(userChatDiv).prepend(userColDiv);
-      $(".messages").append(userChatDiv);
-
-      // Now scroll to the bottom of the messages
-      var wtf    = $('.messages');
-      var height = wtf[0].scrollHeight;
-      wtf.scrollTop(height);
-
-      socket.send(JSON.stringify({
-        event: "questionSubmitted",
-        socketid: "{{ socketid }}",
-        question: question,
-      }));
-      console.log("Question submitted");
-    }
-  });
-
-</script>
 
 <script type="text/javascript">
 
@@ -221,7 +188,9 @@ img {
       $(botChatDiv).prepend(botColDiv);
       $(botChatDiv).prepend(botImage);
       $(".messages").append(botChatDiv);
-      $("html, body").animate({ scrollTop: $(document).height()-$(window).height() }, 100);
+      var wtf    = $('.messages');
+      var height = wtf[0].scrollHeight;
+      wtf.scrollTop(height);
 
     }
     if("finalResult" in response){
@@ -237,6 +206,40 @@ img {
       }
     }
   }
+
+</script>
+
+<script type="text/javascript">
+
+  $("#question").keypress(function (e) {
+    var key = e.which;
+    var question = $("#question").val();
+    if(key == 13 && question != '')  // the enter key code
+    {
+      $("#question").val('');
+      // Create div of the user's message
+      var userChatDiv = $('<div class="row chat_row_human"></div>');
+      var userColDiv = $('<div class="col s9 l7 right"></div>');
+      var userCardPanelDiv = $('<div class="card-panel light-blue darken-4 right"></div>');
+
+      $(userCardPanelDiv).prepend('<span class="white-text">' + question + '</span>');
+      $(userColDiv).prepend(userCardPanelDiv);
+      $(userChatDiv).prepend(userColDiv);
+      $(".messages").append(userChatDiv);
+
+      // Now scroll to the bottom of the messages
+      var wtf    = $('.messages');
+      var height = wtf[0].scrollHeight;
+      wtf.scrollTop(height);
+
+      socket.send(JSON.stringify({
+        event: "questionSubmitted",
+        socketid: "{{ socketid }}",
+        question: question,
+      }));
+      console.log("Question submitted");
+    }
+  });
 
 </script>
 

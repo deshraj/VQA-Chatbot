@@ -1,7 +1,7 @@
 from django.conf import settings
 import os
 
-COCO_IMAGES = os.path.join(settings.MEDIA_ROOT, 'vicki', 'coco')
+COCO_IMAGES = os.path.join(settings.MEDIA_ROOT, 'vicki', 'coco', 'val2014')
 
 BOT_INTORDUCTION_MESSAGE = [
 	"Hi, My name is Vicki. Upload an image and you can ask me any number of questions related to that image.",
