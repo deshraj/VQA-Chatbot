@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.shortcuts import render
 from django.http import JsonResponse
-from chat.sender import svqa
-from chat.utils import log_to_terminal
-import chat.constants as constants
+from vicki.sender import svqa
+from vicki.utils import log_to_terminal, get_random_images
+
+import vicki.constants as constants
+
 import uuid
 import os
 import traceback
@@ -13,6 +15,9 @@ import urllib2
 
 def home(request, template_name="vicki/index.html"):
     socketid = uuid.uuid4()
+
+    random_images = get_random_images(constants.COCO_IMAGES)
+
     intro_message = random.choice(constants.BOT_INTORDUCTION_MESSAGE)
     if request.method == "POST":
         try:
@@ -29,7 +34,11 @@ def home(request, template_name="vicki/index.html"):
         except Exception, err:
             log_to_terminal(socketid, {"terminal": traceback.print_exc()})
 
-    return render(request, template_name, {"socketid": socketid, "bot_intro_message": intro_message })
+    return render(request, template_name, {
+        "socketid": socketid,
+        "bot_intro_message": intro_message,
+        "random_images": random_images
+    })
 
 
 def upload_image(request):
