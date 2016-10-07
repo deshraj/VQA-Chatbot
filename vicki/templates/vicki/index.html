@@ -7,30 +7,34 @@
 
 {% block images %}
 <style type="text/css">
+
 .chatContainer{
   border: 1px;
   width: inherit !important;
   display: block;
   z-index: 1;
   top: auto;
+  min-height: 85%;
+  min-height: 90%;
 }
-.message_typing{
-  bottom: 0 !important;
-  background: #3B5998 !important;
 
-  /*margin-left: 0;*/
-  /*padding-left: 0;*/
+.message_typing{
 }
+
 .messageInputField{
   background: #3B5998 !important;
   color: white;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
 }
 .messages{
-  min-height: 85vh;
-  max-height: 85vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  background: #e1f5fe !important;
+  max-height: 85vh;
+  min-height: 85vh;
+  padding-bottom: 10px;
+  /*background: #e1f5fe !important;*/
 }
 .sampleImagesContainer{
   padding: 0 2px !important;
@@ -47,6 +51,10 @@
   display: list-item;
   float: none;
   font-size: 18px;
+}
+
+.side-nav{
+  height: 90%;
 }
 </style>
 
@@ -79,6 +87,15 @@ img {
   height: 100px !important;
   width: 100%;
 }
+.chatBoxContainer{
+  position: fixed;
+}
+.ChatBoxCardContentDiv{
+  padding: 0 !important;
+}
+.paragraphText{
+  font-size: 18px;
+}
 </style>
   <div class="row">
 
@@ -87,18 +104,14 @@ img {
       <div class="card col s12 m12 l12 instructionsDiv">
         <div class="card-content">
           <h4>Instructions to complete the task</h4>
-           <a href="#" data-activates="slide-out" class="button-collapse">Start Conversation with Bot</a>
           <ol class="instructionsList" type="1">
-            <li>Some random rules goes here.</li>
-            <li>Some random rules goes here.</li>
-            <li>Some random rules goes here.</li>
-            <li>Some random rules goes here.</li>
-            <li>Some random rules goes here.</li>
-            <li>Some random rules goes here.</li>
-            <li>Some random rules goes here.</li>
-            <li>Some random rules goes here.</li>
-            <li>Some random rules goes here.</li>
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
           </ol>
+          <p class="paragraphText">When you are sure about one image and want to submit that, then click this button:</p>
+          <a href="#endGameModal" data-target="endGameModal" class="modal-trigger1 btn blue waves-effect waves-light" id="selectAndSubmitImage" >Select Image and Submit</a>
         </div>
       </div>
 
@@ -116,9 +129,9 @@ img {
 
     </div>
     <div class="col s12 m4 l4">
-      <div class="chatContainer side-nav fixed right z-depth-4" id="slide-out">
-        <div class="messages">
-          <div class="chat_bot_row">
+      <div class="card chatBoxContainer">
+        <div class="card-content ChatBoxCardContentDiv">
+          <div class="messages">
             <img src="{% static 'images/bot.jpg'%}" width="40px" height="40px" class="circle" align="left">
             <div class="col s9 l7 left chat_bot">
               <div class="card-panel black-text grey lighten-3">
@@ -126,15 +139,12 @@ img {
               </div>
             </div>
           </div>
-
-        </div>
-        <div class="message_typing z-depth-3">
-          <div class="col s12 input-field messageInputField">
+          <div class="input-field messageInputField">
             <input id="question" type="text" placeholder="Start typing question here ..." autocomplete="off">
-            <i class="material-icons">close</i>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 
@@ -143,13 +153,11 @@ img {
 {% block message_typing %}
 <script type="text/javascript">
 
-  var image = ""; 
   $("#question").keypress(function (e) {
     var key = e.which;
     var question = $("#question").val();
     if(key == 13 && question != '')  // the enter key code
     {
-      console.log("Question submitted");
       $("#question").val('');
       // Create div of the user's message
       var userChatDiv = $('<div class="row chat_row_human"></div>');
@@ -160,97 +168,20 @@ img {
       $(userColDiv).prepend(userCardPanelDiv);
       $(userChatDiv).prepend(userColDiv);
       $(".messages").append(userChatDiv);
-      $("html, body").animate({ scrollTop: $(document).height()-$(window).height() }, 100);
-      console.log("######### Uploaded image path is " + image);
 
-      // Handles the condition when no image is uploaded yet
-      if (image == ""){
-        var botChatDiv = $('<div class="row chat_bot_row"></div>');
-        var botImage = $('<img src="{% static 'images/bot.jpg'%}" width="40px" height="40px" class="circle" align="left">');
-        var botColDiv = $('<div class="col s9 l7 left chat_bot"></div>');
-        var botCardPanelDiv = $('<div class="card-panel black-text grey lighten-3"></div>');
+      // Now scroll to the bottom of the messages
+      var wtf    = $('.messages');
+      var height = wtf[0].scrollHeight;
+      wtf.scrollTop(height);
 
-        $(botCardPanelDiv).prepend('<span class="black-text">' + "Ummm...I think you forgot to upload an image. Please upload an image to continue. :-)" + '</span>');
-
-        // Append all divs inside each other to create the message div
-        $(botColDiv).prepend(botCardPanelDiv);
-        $(botChatDiv).prepend(botColDiv);
-        $(botChatDiv).prepend(botImage);
-        $(".messages").append(botChatDiv);
-
-        // Now scroll to the bottom of the messages
-        var wtf    = $('.messages');
-        var height = wtf[0].scrollHeight;
-        wtf.scrollTop(height);
-        // $(".chatContainer").animate({ scrollTop: $(document).height()-$(window).height() }, 100);
-
-      }
-      else{
-        console.log("Image is present and the url is " + image);
-
-        var formData = new FormData();
-        formData.append('img_path', image);
-        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-        formData.append('socketid', '{{ socketid }}');
-        formData.append('question', question);
-        $.ajax({
-          type    : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-          url     : '{% url 'home' %}', // the url where we want to POST
-          data    : formData,
-          processData: false,  // tell jQuery not to process the data
-          contentType: false, 
-        })
-        .done(function(response) {
-          console.log("Question submitted successfully.");
-        });
-
-      }
+      socket.send(JSON.stringify({
+        event: "questionSubmitted",
+        socketid: "{{ socketid }}",
+        question: question,
+      }));
+      console.log("Question submitted");
     }
   });
-
-  // Below function is to show the preview of file being uploaded
-  function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        var formData = new FormData();
-        formData.append('file', input.files[0]);
-        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-        formData.append('socketid', '{{ socketid }}');
-        $.ajax({
-          type    : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-          url     : '{% url 'upload' %}', // the url where we want to POST
-          data    : formData,
-          processData: false,  // tell jQuery not to process the data
-          contentType: false, 
-        })
-        .done(function(response) {
-          console.log(response['file_path']);
-          image = response['file_path'];
-        });
-
-        var userChatDiv = $('<div class="row chat_row_human gcam_image"></div>');
-        var userColDiv = $('<div class="col s9 l7 right"></div>');
-        var userCardPanelDiv = $('<div class="card-panel light-blue darken-4 right"></div>');
-        var imageElement = $('<img src="" class="materialboxed responsive-img" width="300px">');
-        $(userCardPanelDiv).prepend(imageElement);
-        $(userColDiv).prepend(userCardPanelDiv);
-        $(userChatDiv).prepend(userColDiv);
-        $(".messages").append(userChatDiv);
-
-        reader.onload = function (e) {
-            $(imageElement).attr('src', e.target.result);
-        }
-        reader.readAsDataURL(input.files[0]);
-        $('.materialboxed').materialbox();
-        $("html, body").animate({ scrollTop: $(document).height()-$(window).height() }, 100);
-    }
-}
-
-$("input:file").change(function(){
-    readURL(this);
-});
-
 
 </script>
 
@@ -260,7 +191,10 @@ $("input:file").change(function(){
   var socket = new WebSocket(ws_scheme + '://' + window.location.host + "/chat" + window.location.pathname);
   socket.onopen = function() {
       console.log("User connected to the socket with socketid "+ "{{socketid}}");
-      socket.send("{{ socketid }}");
+      socket.send(JSON.stringify({
+        "event":"ConnectionEstablished",
+        "socketid": "{{ socketid }}",
+      }));
   }
   socket.onmessage = function(response) {
     console.log("Getting response from the worker.....");
@@ -289,67 +223,30 @@ $("input:file").change(function(){
       $(".messages").append(botChatDiv);
       $("html, body").animate({ scrollTop: $(document).height()-$(window).height() }, 100);
 
-      // Show the text before showing the attention map image
-      setTimeout(function(){
-        var botChatDiv = $('<div class="row chat_bot_row"></div>');
-        var botImage = $('<img src="{% static 'images/bot.jpg'%}" width="40px" height="40px" class="circle" align="left">');
-        var botColDiv = $('<div class="col s9 l7 left chat_bot"></div>');
-        var botCardPanelDiv = $('<div class="card-panel black-text grey lighten-3"></div>');
-
-        $(botCardPanelDiv).prepend('<span class="black-text">' + "Do you want to see where I looked at the image while predicting this answer? See the below image." + '</span>');
-        $(botColDiv).prepend(botCardPanelDiv);
-        $(botChatDiv).prepend(botColDiv);
-        $(botChatDiv).prepend(botImage);
-        $(".messages").append(botChatDiv);
-        $("html, body").animate({ scrollTop: $(document).height()-$(window).height() }, 100);
-      }, 1000);
-
-      // Show the attention Image 
-      setTimeout(function(){
-        var botChatDiv = $('<div class="row chat_bot_row gcam_image"></div>');
-        var botImage = $('<img src="{% static 'images/bot.jpg'%}" width="40px" height="40px" class="circle" align="left">');
-        var botColDiv = $('<div class="col s9 l7 left chat_bot"></div>');
-        var botCardPanelDiv = $('<div class="card-panel black-text grey lighten-3"></div>');
-        var imageElement = $('<img src="' +  result['svqa_gcam'] + '" class="materialboxed responsive-img" width="300px">');
-
-        $(botCardPanelDiv).prepend(imageElement);
-        $(botColDiv).prepend(botCardPanelDiv);
-        $(botChatDiv).prepend(botColDiv);
-        $(botChatDiv).prepend(botImage);
-        $(".messages").append(botChatDiv);
-        $('.materialboxed').materialbox();
-        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
-      }, 2000);
-
+    }
+    if("finalResult" in response){
+      result = JSON.parse(response['finalResult']);
+      console.log(response);
+      if (result == true){
+        $("#time_elapsed").text(response["time_elapsed"]);
+        $("#congratsModal").openModal();
+      }
+      else{
+        var $toastContent = $('<span>Sorry, this is not the correct image.</span>');
+        Materialize.toast($toastContent, 3000, 'rounded');
+      }
     }
   }
 
 </script>
 
-<div id="instructionsModal" class="modal modal-fixed-footer">
-  <div class="modal-content">
-    <h4>Game Instructions</h4>
-    <p>Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. Some instructions goes here. </p>
-  </div>
-  <div class="modal-footer">
-    <p class="modal-action modal-close waves-effect waves-green btn-flat ">All the best from Vicki</p>
-  </div>
-</div>
-
 <script type="text/javascript">
-  // Modal initialization
-
-  $(document).ready(function(){
-    $('.modal-trigger').leanModal();
-  });
-
-
   $('#lightSlider').lightSlider({
       gallery: true,
       item: 2,
       loop: false,
       slideMargin: 1,
-      thumbItem: 12
+      thumbItem: 8
   });
 
   $('.button-collapse').sideNav({
@@ -359,4 +256,5 @@ $("input:file").change(function(){
     );
         
 </script>
+{% include 'vicki/modal.html' %}
 {% endblock %}

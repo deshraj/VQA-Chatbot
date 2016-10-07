@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.shortcuts import render
 from django.http import JsonResponse
-from vicki.sender import svqa
 from vicki.utils import log_to_terminal, get_random_images
+from vicki.models import UserDetail
 
 import vicki.constants as constants
 
@@ -11,29 +11,19 @@ import os
 import traceback
 import random
 import urllib2
+import redis
 
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 def home(request, template_name="vicki/index.html"):
     socketid = uuid.uuid4()
 
     random_images = get_random_images(constants.COCO_IMAGES)
+    target_image = random.choice(random_images)
+    r.set("target_{}".format(str(socketid)), target_image)
 
+    UserDetail.objects.create(uuid = socketid, target_image = target_image)
     intro_message = random.choice(constants.BOT_INTORDUCTION_MESSAGE)
-    if request.method == "POST":
-        try:
-            socketid = request.POST.get("socketid")
-            question = request.POST.get("question")
-            img_path = request.POST.get("img_path")
-            input_answer = ""
-            img_path = urllib2.unquote(img_path)
-            abs_image_path = str(img_path)
-            out_dir = os.path.dirname(abs_image_path)
-
-            response = svqa(str(question), str(input_answer), str(abs_image_path), str(out_dir+"/"), socketid)
-
-        except Exception, err:
-            log_to_terminal(socketid, {"terminal": traceback.print_exc()})
-
     return render(request, template_name, {
         "socketid": socketid,
         "bot_intro_message": intro_message,
